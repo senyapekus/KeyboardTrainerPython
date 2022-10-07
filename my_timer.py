@@ -4,19 +4,21 @@ class MyTimer:
         self.timer_running = False
         self.default_seconds = 1 if self.timer_complexity else 3
         self.timer_seconds = self.default_seconds
+        self.letter_counter = 0
 
     def timer_start_pause(self, timer, messagebox, timer_complexity):
         self.timer_running = True
         if timer_complexity:
             self.default_seconds = 1
-            self.timer_reset(timer)
+            self.timer_reset(timer, self.letter_counter)
         else:
             self.default_seconds = 3
 
         if self.timer_running:
             self.timer_tick(timer, messagebox)
 
-    def timer_reset(self, timer):
+    def timer_reset(self, timer, letter_counter):
+        self.letter_counter = letter_counter
         self.timer_seconds = self.default_seconds
         self.show_timer(timer)
 
@@ -32,8 +34,9 @@ class MyTimer:
                 self.timer_seconds -= 1
             else:
                 self.timer_stop(timer)
-                messagebox.showinfo('Ой...', 'Вы не успели нажать вовремя.'
-                                             '\nПродолжайте тренироваться!')
+                messagebox.showinfo('Хорошая работа!',
+                                    'Вы успели набрать {} симв. '
+                                    '\nПродолжайте тренироваться!'.format(self.letter_counter))
 
     def show_timer(self, timer):
         timer['text'] = self.timer_seconds
