@@ -2,64 +2,44 @@ import random
 from tkinter import *
 from tkinter import messagebox
 from datetime import datetime
+import mytimer
+
 
 check = ''
 txt_speed = 'Набери этот текст без ошибок и узнай свою скорость печати.'
 txt_trainer = 'йцукенгшщзхъфывапролджэячсмитьбю123456789'
 start = datetime
-timer_running = False
-default_seconds = 3
-timer_seconds = default_seconds
+timer_complexity = False
+t = mytimer.MyTimer(timer_complexity)
 
 
 def clicked_exit():
     window.destroy()
 
 
-def timer_start_pause():
-    global timer_running
-    timer_running = True
-    if timer_running:
-        timer_tick()
-
-
-def timer_reset():
-    global timer_seconds
-    timer_seconds = default_seconds
-    show_timer()
-
-
-def timer_stop():
-    global timer_running
-    timer_running = False
-    show_timer()
-
-
-def timer_tick():
-    if timer_running:
-        show_timer()
-        timer.after(1000, timer_tick)
-
-        global timer_seconds
-        if timer_seconds > 0:
-            timer_seconds -= 1
-        else:
-            timer_stop()
-            messagebox.showinfo('Ой...', 'Вы не успели нажать вовремя.'
-                                         '\nПродолжайте тренироваться!')
-
-
-def show_timer():
-    global timer_seconds
-    timer['text'] = timer_seconds
-
-
 def trainer_keypress(event):
     if event.char == key['text']:
-        global timer_seconds
-        timer_seconds = default_seconds
-        timer_reset()
+        t.timer_reset(timer)
         key['text'] = random.choice(txt_trainer)
+
+
+def hard_trainer():
+    exit_btn.destroy()
+    greeting.destroy()
+    button1.destroy()
+    button2.destroy()
+    window.geometry('1100x600')
+
+    space_timer = Label(window,
+                        text='\n\n\n\n\n')
+
+    key.pack()
+    space_timer.pack()
+    timer.pack()
+
+    t.timer_start_pause(timer, messagebox, True)
+
+    window.bind("<Key>", trainer_keypress)
 
 
 def normal_trainer():
@@ -76,7 +56,7 @@ def normal_trainer():
     space_timer.pack()
     timer.pack()
 
-    timer_start_pause()
+    t.timer_start_pause(timer, messagebox, False)
 
     window.bind("<Key>", trainer_keypress)
 
@@ -107,8 +87,9 @@ def clicked_trainer():
                        '\n\nВыберите уровень сложности\n(русская раскладка):'
     greeting['font'] = ('Arial Bold', 18)
     button1['text'] = 'Нормальный'
-    button2['text'] = 'Сложный\n(в разработке)'
+    button2['text'] = 'Сложный'
     button1['command'] = normal_trainer
+    button2['command'] = hard_trainer
 
 
 def clicked_speed():
