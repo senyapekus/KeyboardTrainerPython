@@ -10,6 +10,7 @@ txt_trainer = 'йцукенгшщзхъфывапролджэячсмитьбю�
               'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ'
 start = datetime
 timer_complexity = False
+letter_counter = 0
 t = my_timer.MyTimer(timer_complexity)
 
 
@@ -18,14 +19,17 @@ def clicked_exit():
 
 
 def start_over():
-    global timer_complexity
-    t.timer_reset(timer)
+    global timer_complexity, letter_counter
+    letter_counter = 0
+    t.timer_reset(timer, letter_counter)
     t.timer_start_pause(timer, messagebox, timer_complexity)
 
 
 def trainer_keypress(event):
+    global letter_counter
     if event.char == key['text']:
-        t.timer_reset(timer)
+        letter_counter += 1
+        t.timer_reset(timer, letter_counter)
         key['text'] = random.choice(txt_trainer)
 
 
@@ -44,11 +48,11 @@ def hard_trainer():
                          text="Начать заново",
                          font=('Arial Bold', 15),
                          command=start_over)
-    exit = Button(window,
-                  text='Выход',
-                  font=('Arial Bold', 15),
-                  anchor=CENTER,
-                  command=clicked_exit)
+    exit_b = Button(window,
+                    text='Выход',
+                    font=('Arial Bold', 15),
+                    anchor=CENTER,
+                    command=clicked_exit)
     space_timer = Label(window,
                         text='\n\n')
     second_space_timer = Label(window,
@@ -58,7 +62,7 @@ def hard_trainer():
     timer.pack()
     second_space_timer.pack()
     over_button.pack()
-    exit.pack()
+    exit_b.pack()
 
     t.timer_start_pause(timer, messagebox, True)
 
@@ -78,11 +82,11 @@ def normal_trainer():
                          text="Начать заново",
                          font=('Arial Bold', 15),
                          command=start_over)
-    exit = Button(window,
-                  text='Выход',
-                  font=('Arial Bold', 15),
-                  anchor=CENTER,
-                  command=clicked_exit)
+    exit_b = Button(window,
+                    text='Выход',
+                    font=('Arial Bold', 15),
+                    anchor=CENTER,
+                    command=clicked_exit)
     space_timer = Label(window,
                         text='\n\n')
     second_space_timer = Label(window,
@@ -92,7 +96,7 @@ def normal_trainer():
     timer.pack()
     second_space_timer.pack()
     over_button.pack()
-    exit.pack()
+    exit_b.pack()
 
     t.timer_start_pause(timer, messagebox, False)
 
