@@ -36,7 +36,8 @@ class MyTimer:
                 self.timer_stop(timer)
                 messagebox.showinfo('Хорошая работа!',
                                     'Вы успели набрать {} симв. '
-                                    '\nПродолжайте тренироваться!'.format(self.letter_counter))
+                                    '\nПродолжайте тренироваться!'
+                                    .format(self.letter_counter))
 
     def show_timer(self, timer):
         timer['text'] = self.timer_seconds
