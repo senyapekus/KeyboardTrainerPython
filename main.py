@@ -2,7 +2,7 @@ import random
 from tkinter import *
 from tkinter import messagebox
 from datetime import datetime
-import mytimer
+import my_timer
 
 
 check = ''
@@ -10,7 +10,7 @@ txt_speed = 'Набери этот текст без ошибок и узнай 
 txt_trainer = 'йцукенгшщзхъфывапролджэячсмитьбю123456789'
 start = datetime
 timer_complexity = False
-t = mytimer.MyTimer(timer_complexity)
+t = my_timer.MyTimer(timer_complexity)
 
 
 def clicked_exit():
