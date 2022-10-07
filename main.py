@@ -4,7 +4,6 @@ from tkinter import messagebox
 from datetime import datetime
 import my_timer
 
-
 check = ''
 txt_speed = 'Набери этот текст без ошибок и узнай свою скорость печати.'
 txt_trainer = 'йцукенгшщзхъфывапролджэячсмитьбю123456789'
@@ -17,6 +16,12 @@ def clicked_exit():
     window.destroy()
 
 
+def start_over():
+    global timer_complexity
+    t.timer_reset(timer)
+    t.timer_start_pause(timer, messagebox, timer_complexity)
+
+
 def trainer_keypress(event):
     if event.char == key['text']:
         t.timer_reset(timer)
@@ -24,18 +29,35 @@ def trainer_keypress(event):
 
 
 def hard_trainer():
+    global timer_complexity
     exit_btn.destroy()
+    new_space.destroy()
+    new_exit_btn.destroy()
     greeting.destroy()
     button1.destroy()
     button2.destroy()
     window.geometry('1100x600')
 
+    timer_complexity = True
+    over_button = Button(window,
+                         text="Начать заново",
+                         font=('Arial Bold', 15),
+                         command=start_over)
+    exit = Button(window,
+                  text='Выход',
+                  font=('Arial Bold', 15),
+                  anchor=CENTER,
+                  command=clicked_exit)
     space_timer = Label(window,
-                        text='\n\n\n\n\n')
-
+                        text='\n\n')
+    second_space_timer = Label(window,
+                               text='\n\n')
     key.pack()
     space_timer.pack()
     timer.pack()
+    second_space_timer.pack()
+    over_button.pack()
+    exit.pack()
 
     t.timer_start_pause(timer, messagebox, True)
 
@@ -44,17 +66,32 @@ def hard_trainer():
 
 def normal_trainer():
     exit_btn.destroy()
+    new_space.destroy()
+    new_exit_btn.destroy()
     greeting.destroy()
     button1.destroy()
     button2.destroy()
     window.geometry('1100x600')
 
+    over_button = Button(window,
+                         text="Начать заново",
+                         font=('Arial Bold', 15),
+                         command=start_over)
+    exit = Button(window,
+                  text='Выход',
+                  font=('Arial Bold', 15),
+                  anchor=CENTER,
+                  command=clicked_exit)
     space_timer = Label(window,
-                        text='\n\n\n\n\n')
-
+                        text='\n\n')
+    second_space_timer = Label(window,
+                               text='\n\n')
     key.pack()
     space_timer.pack()
     timer.pack()
+    second_space_timer.pack()
+    over_button.pack()
+    exit.pack()
 
     t.timer_start_pause(timer, messagebox, False)
 
@@ -82,6 +119,8 @@ def handle_keypress(event):
 
 def clicked_trainer():
     exit_btn.destroy()
+    first_space.destroy()
+    second_space.destroy()
     greeting['text'] = 'В данном режиме вам нужно нажать' \
                        '\nна появившуюся клавишу, пока не истек\nтаймер' \
                        '\n\nВыберите уровень сложности\n(русская раскладка):'
@@ -91,11 +130,15 @@ def clicked_trainer():
     button1['command'] = normal_trainer
     button2['command'] = hard_trainer
 
+    new_space.pack()
+    new_exit_btn.pack()
+
 
 def clicked_speed():
     exit_btn.destroy()
     greeting.destroy()
-    space.destroy()
+    first_space.destroy()
+    second_space.destroy()
     button1.destroy()
     button2.destroy()
     window.geometry('1100x600')
@@ -113,15 +156,11 @@ def clicked_speed():
     entry = Entry(window,
                   width=100,
                   textvariable=v)
-    new_exit_btn = Button(window,
-                          text='Выход',
-                          font=('Arial Bold', 15),
-                          anchor=CENTER,
-                          command=clicked_exit)
 
     greeting_speed.pack()
     txt.pack()
     entry.pack()
+    new_space.pack()
     new_exit_btn.pack()
 
     window.bind("<Key>", handle_keypress)
@@ -135,7 +174,12 @@ if __name__ == '__main__':
                      text='Приветствуем в Клавиатурном тренажере!',
                      font=('Arial Bold', 20),
                      anchor=CENTER)
-    space = Label(window, text=' ')
+    first_space = Label(window,
+                        text='\n\n')
+    second_space = Label(window,
+                         text='\n\n')
+    new_space = Label(window,
+                      text='\n\n\n')
     button1 = Button(window,
                      text="Узнать свою скорость печати",
                      font=('Arial Bold', 15),
@@ -149,6 +193,11 @@ if __name__ == '__main__':
                       font=('Arial Bold', 15),
                       anchor=CENTER,
                       command=clicked_exit)
+    new_exit_btn = Button(window,
+                          text='Выход',
+                          font=('Arial Bold', 15),
+                          anchor=CENTER,
+                          command=clicked_exit)
     timer = Label(window,
                   font=('Arial Bold', 25),
                   fg='#006400',
@@ -169,9 +218,10 @@ if __name__ == '__main__':
 
     v = StringVar()
     greeting.pack()
-    space.pack()
+    first_space.pack()
     button1.pack()
     button2.pack()
+    second_space.pack()
     exit_btn.pack()
 
     window.mainloop()
