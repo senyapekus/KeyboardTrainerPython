@@ -1,17 +1,21 @@
 import random
+import unicodedata
 from tkinter import *
 from tkinter import messagebox
 from datetime import datetime
 import my_timer
 
 check = ''
-txt_speed = 'Набери этот текст без ошибок и узнай свою скорость печати.'
+txt_speed = ''
 txt_trainer = 'йцукенгшщзхъфывапролджэячсмитьбюё123456789' \
               'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ'
 start = datetime
 timer_complexity = False
 letter_counter = 0
 t = my_timer.MyTimer(timer_complexity)
+
+with open("text_speed_test.txt", "r", encoding='utf8') as file:
+    text_file = file.read().split('\n')
 
 
 def clicked_exit():
@@ -113,7 +117,7 @@ def handle_keypress(event):
     if event.char == '.':
         time = float(str(datetime.now() - start).split(':')[2])
         result = int((60 * len(txt_speed)) / time)
-        check = v.get()
+        check = unicodedata.normalize('NFC', v.get())
         if check == txt_speed:
             messagebox.showinfo('Результат', 'Вы печатаете примерно '
                                              '{} сим/минуту'.format(result))
@@ -140,13 +144,15 @@ def clicked_trainer():
 
 
 def clicked_speed():
+    global txt_speed
     exit_btn.destroy()
     greeting.destroy()
     first_space.destroy()
     second_space.destroy()
     button1.destroy()
     button2.destroy()
-    window.geometry('1100x600')
+    window.geometry('1350x600')
+    txt_speed = unicodedata.normalize('NFC', random.choice(text_file))
     greeting_speed = Label(window,
                            text='Как будешь готов,'
                                 ' начинай печатать текст в рамке:',
