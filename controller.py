@@ -1,12 +1,14 @@
+"""controller in mvc-pattern"""
 import random
 import unicodedata
-from tkinter import *
-from tkinter import messagebox
 from datetime import datetime
+from tkinter import CENTER, RIDGE, Entry, Label, messagebox
+
 import my_timer
 
 
 class Controller:
+    """create controller"""
     def __init__(self, model, view):
         self.model = model
         self.view = view
@@ -21,9 +23,11 @@ class Controller:
         self.t = my_timer.MyTimer(self.timer_complexity)
 
     def clicked_exit(self):
+        """exit"""
         self.view.window.destroy()
 
     def clicked_speed(self):
+        """speed"""
         self.view.exit_btn.destroy()
         self.view.greeting.destroy()
         self.view.first_space.destroy()
@@ -56,6 +60,7 @@ class Controller:
         self.view.window.bind("<Key>", self.handle_keypress)
 
     def clicked_trainer(self):
+        """trainer"""
         self.view.exit_btn.destroy()
         self.view.first_space.destroy()
         self.view.second_space.destroy()
@@ -72,6 +77,7 @@ class Controller:
         self.view.new_exit_btn.pack()
 
     def handle_keypress(self, event):
+        """keypress"""
         if event.char == self.txt_speed[0]:
             self.start = datetime.now()
         if event.char == '.':
@@ -86,11 +92,13 @@ class Controller:
                                                     '\nПопробуйте снова.')
 
     def start_over(self):
+        """start over"""
         self.letter_counter = 0
         self.t.timer_reset(self.view.timer, self.letter_counter)
         self.t.timer_start_pause(self.view.timer, messagebox, self.timer_complexity)
 
     def hard_trainer(self):
+        """hard trainer mode"""
         self.view.exit_btn.destroy()
         self.view.new_space.destroy()
         self.view.new_exit_btn.destroy()
@@ -113,6 +121,7 @@ class Controller:
         self.view.window.bind("<Key>", self.trainer_keypress)
 
     def normal_trainer(self):
+        """normal trainer mode"""
         self.view.exit_btn.destroy()
         self.view.new_space.destroy()
         self.view.new_exit_btn.destroy()
@@ -133,6 +142,7 @@ class Controller:
         self.view.window.bind("<Key>", self.trainer_keypress)
 
     def trainer_keypress(self, event):
+        """trainer keypress"""
         if event.char == self.view.key['text']:
             self.letter_counter += 1
             self.t.timer_reset(self.view.timer, self.letter_counter)
