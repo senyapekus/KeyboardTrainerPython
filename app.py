@@ -1,10 +1,13 @@
-from view import View
-from model import Model
-from controller import Controller
+"""app file"""
 import tkinter as tk
+
+from controller import Controller
+from model import Model
+from view import View
 
 
 class App(tk.Tk):
+    """create app"""
     def __init__(self):
         super().__init__()
 

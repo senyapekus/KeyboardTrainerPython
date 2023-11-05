@@ -1,44 +1,50 @@
+"""main file"""
 import random
 import unicodedata
+from datetime import datetime
 from tkinter import *
 from tkinter import messagebox
-from datetime import datetime
+
 import my_timer
 
-check = ''
-txt_speed = ''
-txt_trainer = 'йцукенгшщзхъфывапролджэячсмитьбюё123456789' \
+CHECK = ''
+TXT_SPEED = ''
+TXT_TRAINER = 'йцукенгшщзхъфывапролджэячсмитьбюё123456789' \
               'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ'
 start = datetime
-timer_complexity = False
-letter_counter = 0
-t = my_timer.MyTimer(timer_complexity)
+TIMER_COMPLEXITY = False
+LETTER_COUNTER = 0
+t = my_timer.MyTimer(TIMER_COMPLEXITY)
 
 with open("text_speed_test.txt", "r", encoding='utf8') as file:
     text_file = file.read().split('\n')
 
 
 def clicked_exit():
+    """exit"""
     window.destroy()
 
 
 def start_over():
-    global timer_complexity, letter_counter
-    letter_counter = 0
-    t.timer_reset(timer, letter_counter)
-    t.timer_start_pause(timer, messagebox, timer_complexity)
+    """start over"""
+    global TIMER_COMPLEXITY, LETTER_COUNTER
+    LETTER_COUNTER = 0
+    t.timer_reset(timer, LETTER_COUNTER)
+    t.timer_start_pause(timer, messagebox, TIMER_COMPLEXITY)
 
 
 def trainer_keypress(event):
-    global letter_counter
+    """trainer"""
+    global LETTER_COUNTER
     if event.char == key['text']:
-        letter_counter += 1
-        t.timer_reset(timer, letter_counter)
-        key['text'] = random.choice(txt_trainer)
+        LETTER_COUNTER += 1
+        t.timer_reset(timer, LETTER_COUNTER)
+        key['text'] = random.choice(TXT_TRAINER)
 
 
 def hard_trainer():
-    global timer_complexity
+    """hard trainer"""
+    global TIMER_COMPLEXITY
     exit_btn.destroy()
     new_space.destroy()
     new_exit_btn.destroy()
@@ -47,7 +53,7 @@ def hard_trainer():
     button2.destroy()
     window.geometry('1100x600')
 
-    timer_complexity = True
+    TIMER_COMPLEXITY = True
     over_button = Button(window,
                          text="Начать заново",
                          font=('Arial Bold', 15),
@@ -74,6 +80,7 @@ def hard_trainer():
 
 
 def normal_trainer():
+    """normal trainer"""
     exit_btn.destroy()
     new_space.destroy()
     new_exit_btn.destroy()
@@ -108,6 +115,7 @@ def normal_trainer():
 
 
 def handle_keypress(event):
+    """handle keypress"""
     global check
     global v
     global start
@@ -127,6 +135,7 @@ def handle_keypress(event):
 
 
 def clicked_trainer():
+    """clicked trainer"""
     exit_btn.destroy()
     first_space.destroy()
     second_space.destroy()
@@ -144,6 +153,7 @@ def clicked_trainer():
 
 
 def clicked_speed():
+    """speed"""
     global txt_speed
     exit_btn.destroy()
     greeting.destroy()
@@ -216,7 +226,7 @@ if __name__ == '__main__':
                   height=2,
                   width=3)
     key = Label(window,
-                text=random.choice(txt_trainer),
+                text=random.choice(TXT_TRAINER),
                 font=('Arial Bold', 25),
                 anchor=CENTER,
                 height=2,

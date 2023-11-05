@@ -1,9 +1,11 @@
+"""view in mvc-pattern"""
+import random
 from tkinter import *
 from tkinter import ttk
-import random
 
 
 class View(ttk.Frame):
+    """view"""
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -73,6 +75,7 @@ class View(ttk.Frame):
         self.controller = None
 
     def set_controller(self, controller):
+        """set controller"""
         print('set_c start')
         self.controller = controller
 
